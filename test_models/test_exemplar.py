@@ -106,17 +106,13 @@ def train_model_get_cosine_matrix(statements):
     sims = np.zeros((len(mydict), len(mydict)))
     for i in np.arange(len(mydict)):
         for j in np.arange(i,len(mydict)):
-            # skip in i == j
-            if i == j:
-                sims[i, j] = 1
-                sims[j, i] = 1
-                continue
-            AC = get_set_of_contexts(wd, mydict, i)
-            BC = get_set_of_contexts(wd, mydict, j)
-            sim = get_sim(AC,BC)
-            sims[i, j] = sim
-            sims[j, i] = sim
-    
+            for t in sorted(list(set(mydict.keys()) - set([i,j]))):
+                AC = get_set_of_contexts(wd, mydict, i)
+                BC = get_set_of_contexts(wd, mydict, j)
+                sim = get_sim(AC,BC)
+                sims[i, j] += sim
+                sims[j, i] += sim
+        
     out = pd.DataFrame(sims)
     out.columns = list(mydict.keys())
     out.index = list(mydict.keys())
@@ -130,4 +126,13 @@ if __name__ == "__main__":
         with open(path_out,'r') as file:
             statements = file.readlines()
         out = train_model_get_cosine_matrix(statements)
-        out.to_csv('../cosines/distance/exemplar_'+ path.split('.')[0] + '.csv', index = False)
+        out.to_csv('../cosines/distance/exemplarVector_'+ path.split('.')[0] + '.csv', index = False)
+        
+    for path in listdir('../distributions/uniform/'):
+#        path = listdir('../distributions/distance/')[10]
+        print(path)
+        path_out = '../distributions/uniform/' + path
+        with open(path_out,'r') as file:
+            statements = file.readlines()
+        out = train_model_get_cosine_matrix(statements)
+        out.to_csv('../cosines/uniform/exemplarVector_'+ path.split('.')[0] + '.csv', index = False)

@@ -34,19 +34,32 @@ def train_model_get_cosine_matrix(statements, num):
     index = MatrixSimilarity(vectorized_corpus)
     index[vectorized_corpus]
     
-    out = pd.DataFrame(index[vectorized_corpus])
+    out = pd.DataFrame(np.array(index[vectorized_corpus]))
     out.columns = sorted(list(dictionary.token2id.keys()))
     out.index = sorted(list(dictionary.token2id.keys()))
     return out
+#    return np.array(index[vectorized_corpus])
 
 if __name__ == "__main__":
-    dims = np.arange(5,16)    
+    dims = np.arange(5,20)    
     for path in listdir('../distributions/distance/'):
         print(path)
         path_out = '../distributions/distance/' + path
         with open(path_out,'r') as file:
-            statements = file.readlines()
+            statements = file.read().split('\n')
             
         for i in dims:
             out = train_model_get_cosine_matrix(statements,i)
             out.to_csv('../cosines/distance/lsa'+str(i)+'_'+ path.split('.')[0] + '.csv', index = False)
+            
+    for path in listdir('../distributions/uniform/'):
+#        path = '../distributions/uniform/direction.txt'
+        print(path)
+        path_out = '../distributions/uniform/' + path
+        with open(path_out,'r') as file:
+            statements = file.read().split('\n')
+        out = []
+        for i in dims:
+#            out.append(train_model_get_cosine_matrix(statements,i))
+            out = train_model_get_cosine_matrix(statements,i)
+            out.to_csv('../cosines/uniform/lsa'+str(i)+'_'+ path.split('.')[0] + '.csv', index = False)

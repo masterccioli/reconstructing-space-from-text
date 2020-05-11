@@ -52,3 +52,11 @@ if __name__ == "__main__":
             statements = file.readlines()
         out = train_model_get_cosine_matrix(statements)
         out.to_csv('../cosines/distance/pmi_'+ path.split('.')[0] + '.csv', index = False)
+    for path in listdir('../distributions/uniform/'):
+#        path = listdir('../distributions/uniform/')[4]
+        print(path)
+        path_out = '../distributions/uniform/' + path
+        with open(path_out,'r') as file:
+            statements = file.read().split('\n')
+        out = train_model_get_cosine_matrix(statements)
+        out.to_csv('../cosines/distance/pmi_'+ path.split('.')[0] + '.csv', index = False)

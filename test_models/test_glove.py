@@ -15,9 +15,23 @@ def cosine(compare):
     return np.dot(compare,compare.transpose()) / np.outer(np.sqrt(np.sum(compare*compare,1)),np.sqrt(np.sum(compare*compare,1)))
 
 if __name__ == "__main__":
-    for path in listdir('GloVe/vectors/distance/'):
-        print(path)
+    for path in listdir('GloVe/vectors/uniform/'):
+#        path = listdir('GloVe/vectors/uniform/')[-1]
         if path.split('.')[-1] == 'txt':
+            print(path)
+        #    path = listdir('glove_vectors/distance/')[4]
+            vects = pd.read_csv('GloVe/vectors/uniform/' + path, header = None, sep = ' ')
+            vects = vects[:-1]
+            vects = vects.sort_values(by=[0])
+            words = sorted(list(vects.loc[:,vects.columns == 0][0]))
+            out = pd.DataFrame(cosine(vects.loc[:, vects.columns != 0]))
+            out.columns = list(vects.loc[:,vects.columns == 0][0])
+            out.to_csv('../cosines/uniform/glove_'+ path.split('.')[0] + '.csv', index = False)
+
+    for path in listdir('GloVe/vectors/distance/'):
+#        path = listdir('GloVe/vectors/uniform/')[-1]
+        if path.split('.')[-1] == 'txt':
+            print(path)
         #    path = listdir('glove_vectors/distance/')[4]
             vects = pd.read_csv('GloVe/vectors/distance/' + path, header = None, sep = ' ')
             vects = vects[:-1]
