@@ -1,3 +1,6 @@
 jaccard/
 .get_wd.py
 heatmaps/
+*.csv
+*.txt
+*.jpg

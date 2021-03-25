@@ -132,10 +132,10 @@ def make_output(statements,
     sample = sample_statements(statements, corpus_size, sampling_distribution)
 
     # save statements
-    save_statements_as_txt('../../test_models/GloVe/corpus/distance/' +
-                           distribution_name + '_' +
-                           relationship_name +
-                           '.txt', sample)
+    # save_statements_as_txt('../../test_models/GloVe/corpus/distance/' +
+    #                        distribution_name + '_' +
+    #                        relationship_name +
+    #                        '.txt', sample)
     save_statements_as_txt('../distance/'  +
                            distribution_name + '_' +
                            relationship_name +
@@ -145,10 +145,10 @@ def make_output(statements,
     sample = sample_statements(statements, corpus_size)
 
     # save statements
-    save_statements_as_txt('../../test_models/GloVe/corpus/uniform/' +
-                           distribution_name + '_' +
-                           relationship_name +
-                           '.txt', sample)
+    # save_statements_as_txt('../../test_models/GloVe/corpus/uniform/' +
+    #                        distribution_name + '_' +
+    #                        relationship_name +
+    #                        '.txt', sample)
     save_statements_as_txt('../uniform/'  +
                            distribution_name + '_' +
                            relationship_name +
@@ -234,4 +234,21 @@ if __name__ == "__main__":
                 'nf',
                 corpus_size,
                 dists_cluster_2)
+    
+    # both combined
+    make_output(statements_shape_nsew+statements_shape_nf,
+                'shape',
+                'nsew_nf',
+                corpus_size,
+                np.hstack([dists_shape,dists_shape])/2)
+    make_output(statements_cluster_1_nsew+statements_cluster_1_nf,
+                'cluster1',
+                'nsew_nf',
+                corpus_size,
+                np.hstack([dists_cluster_1,dists_cluster_1])/2)
+    make_output(statements_cluster_2_nsew+statements_cluster_2_nf,
+                'cluster2',
+                'nsew_nf',
+                corpus_size,
+                np.hstack([dists_cluster_2,dists_cluster_2])/2)
     
