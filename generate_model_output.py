@@ -5,7 +5,7 @@ Created on Tue Feb  4 19:10:42 2020
 @author: maste
 """
 
-from subprocess import call
+from subprocess import call, run
 import os
 
 # Generate Corpus
@@ -27,8 +27,8 @@ print('GloVe')
 os.chdir('GloVe/')
 call('bash -c ./run_GloVe.sh')
 # get cosines
-call('python test_glove.py')
 os.chdir('../')
+call('python test_glove.py')
 
 # PPMI
 print('PPMI')

@@ -119,7 +119,7 @@ if __name__ == "__main__":
         with open(path_out, 'r') as file:
             in_statements = file.readlines()
         out = train_model_get_cosine_matrix(in_statements)
-        out.to_csv('../cosines/distance/exemplarVector_'+ path.split('.')[0] + \
+        out.to_csv('../cosines/distance/exemplarVector2_'+ path.split('.')[0] + \
                    '.csv', index=False)
 
     for path in listdir('../distributions/uniform/'):
@@ -129,6 +129,5 @@ if __name__ == "__main__":
         with open(path_out, 'r') as file:
             in_statements = file.readlines()
         out = train_model_get_cosine_matrix(in_statements)
-        out.to_csv('../cosines/uniform/exemplarVector_'+ path.split('.')[0] + \
+        out.to_csv('../cosines/uniform/exemplarVector2_'+ path.split('.')[0] + \
                    '.csv', index=False)
-        

@@ -22,23 +22,23 @@ def train_model_get_cosine_matrix(statements):
                                 (key,word)
                                 for key in sorted(frequencies.keys())
                                 for statement in statements
-                                for word in statement 
+                                for word in statement
                                 if key in statement)
-        
-    pmi = [[npmi_scorer(frequencies[worda], 
-                  frequencies[wordb], 
-                  conditionalFrequencies[worda][wordb], 
+
+    pmi = [[npmi_scorer(frequencies[worda],
+                  frequencies[wordb],
+                  conditionalFrequencies[worda][wordb],
                   len(frequencies.keys()),
                   2,
                   sum(frequencies[key] for key in frequencies.keys()))
         for wordb in sorted(frequencies.keys())]
         for worda in sorted(frequencies.keys())]
-        
-        
+
+
     pmi = np.array(pmi)
     pmi[np.isinf(pmi)] = -1
     pmi[np.where(pmi < 0)] = 0
-        
+
     pmi = pd.DataFrame(pmi)
     pmi.columns = sorted(frequencies.keys())
     pmi.index = sorted(frequencies.keys())
@@ -59,4 +59,4 @@ if __name__ == "__main__":
         with open(path_out,'r') as file:
             statements = file.read().split('\n')
         out = train_model_get_cosine_matrix(statements)
-        out.to_csv('../cosines/distance/pmi_'+ path.split('.')[0] + '.csv', index = False)
+        out.to_csv('../cosines/uniform/pmi_'+ path.split('.')[0] + '.csv', index = False)
